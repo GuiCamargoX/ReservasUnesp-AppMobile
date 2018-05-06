@@ -23,7 +23,7 @@ export class LoginPage {
     // FirebaseUI config.
     return {
       callbacks: {
-        signInSuccess: (currentUser, credential, redirectUrl) => {
+        signInSuccessWithAuthResult: (currentUser, credential, redirectUrl) => {
           // Do something.
           // Return type determines whether we continue the redirect automatically
           // or whether we leave that to developer to handle.

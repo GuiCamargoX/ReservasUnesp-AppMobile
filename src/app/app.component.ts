@@ -16,14 +16,14 @@ export class MyApp {
 
   constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen) {
 
-    // Initialize Firebase
+    // FirebaseUI config.
     var config = {
-      apiKey: "AIzaSyB0qxCieE7-B0aM0m03qdoSomMk0xVG3dY",
-      authDomain: "ionicfirebaseui.firebaseapp.com",
-      databaseURL: "https://ionicfirebaseui.firebaseio.com",
-      projectId: "ionicfirebaseui",
-      storageBucket: "ionicfirebaseui.appspot.com",
-      messagingSenderId: "281186760812"
+      apiKey: "AIzaSyDthzEdtrH3D2WMwybQFi4EUKxKuoIvhBg",
+      authDomain: "reservasunesp.firebaseapp.com",
+      databaseURL: "https://reservasunesp.firebaseio.com",
+      projectId: "reservasunesp",
+      storageBucket: "reservasunesp.appspot.com",
+      messagingSenderId: "650512229396"
     };
     firebase.initializeApp(config);
   }
