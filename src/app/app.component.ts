@@ -32,7 +32,16 @@ export class MyApp {
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+      // User is signed in.
+        let displayName = user.displayName;
+        let email = user.email;
+        let emailVerified = user.emailVerified;
+        let photoURL = user.photoURL;
+        let uid = user.uid;
+        let phoneNumber = user.phoneNumber;
+        let providerData = user.providerData;
         // User is authenticated.
+        console.log('ola '+photoURL);
         this.setRootPage('HomePage');
       } else {
         // User is not authenticated.
