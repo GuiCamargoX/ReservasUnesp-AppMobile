@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as firebase from 'firebase';
+import { User } from '../../Models/user';
 
 /**
  * Generated class for the HomePage page.
@@ -15,7 +16,10 @@ import * as firebase from 'firebase';
 })
 export class HomePage {
 
+  public infoUser : User;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.infoUser = this.navParams.get('infoUser');
   }
 
   ionViewDidLoad() {

@@ -1,3 +1,4 @@
+import { User } from './../Models/user';
 import { Component, ViewChild } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -13,6 +14,7 @@ export class MyApp {
   @ViewChild('myNav') nav
   rootPage:any;
   firstRun: boolean = true;
+  public userLogged : User ;
 
   constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen) {
 
@@ -33,15 +35,16 @@ export class MyApp {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
       // User is signed in.
-        let displayName = user.displayName;
-        let email = user.email;
-        let emailVerified = user.emailVerified;
-        let photoURL = user.photoURL;
-        let uid = user.uid;
-        let phoneNumber = user.phoneNumber;
-        let providerData = user.providerData;
+        let l : User = {displayName : user.displayName,
+                        email : user.email,
+                        emailVerified : user.emailVerified,
+                        photoURL : user.photoURL,
+                        uid : user.uid,
+                        phoneNumber : user.phoneNumber,
+                        providerData : user.providerData,
+                         }
+        this.userLogged = l;
         // User is authenticated.
-        console.log('ola '+photoURL);
         this.setRootPage('HomePage');
       } else {
         // User is not authenticated.
@@ -66,7 +69,9 @@ export class MyApp {
         this.firstRun = false;
       });
     } else {
-      this.nav.setRoot(page);
+      this.nav.setRoot(page, {
+        infoUser : this.userLogged
+      });
     }
   }
 }
