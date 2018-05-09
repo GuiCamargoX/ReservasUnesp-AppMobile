@@ -14,13 +14,58 @@
 
 
 <ion-content padding>
-  <img [src]=infoUser.photoURL class="image circle-pic"  />
+    <img [src]=infoUser.photoURL class="image circle-pic"  />
   
-  <div style="width:300px;height:20px;" ></div>
-    <h3 style="color:#000000;font-weight:300;text-align:center;">
-    Welcome:<br> {{ infoUser.displayName }}
-    </h3>
-  
+    <div style="width:300px;height:20px;" ></div>
+      <h3 style="color:#000000;font-weight:300;text-align:center;">
+      Welcome:<br> {{ infoUser.displayName }}
+      </h3> 
+
+    <ion-grid>
+      <ion-row center>
+            <ion-col offset-1>
+              <button ion-button icon-center large class="btn">
+                <ion-icon name="unlock"></ion-icon>
+              </button>
+            </ion-col>
+
+            <ion-col offset-1>
+              <button ion-button icon-center large class="btn">
+                <ion-icon name="unlock"></ion-icon>
+              </button>
+            </ion-col>
+
+            <ion-col offset-1>
+              <button ion-button icon-center large class="btn">
+                <ion-icon name="unlock"></ion-icon>
+              </button>
+            </ion-col>
+
+      </ion-row>
+
+      <ion-row center>
+          <ion-col offset-1>
+            <button ion-button icon-center large class="btn">
+              <ion-icon name="unlock"></ion-icon>
+            </button>
+          </ion-col>
+
+          <ion-col offset-1>
+            <button ion-button icon-center large class="btn">
+              <ion-icon name="unlock"></ion-icon>
+            </button>
+          </ion-col>
+
+          <ion-col offset-1>
+            <button ion-button icon-center large class="btn">
+              <ion-icon name="unlock"></ion-icon>
+            </button>
+          </ion-col>
+
+    </ion-row>
+    
+    </ion-grid>
+
   <button ion-button (click)="logout()">
     Log out
   </button>
