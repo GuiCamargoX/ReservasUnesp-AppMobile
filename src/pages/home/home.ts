@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { User } from '../../Models/user';
 
+
 /**
  * Generated class for the HomePage page.
  *
@@ -29,5 +30,32 @@ export class HomePage {
   logout() {
     firebase.auth().signOut();
   }
+
+  openReservar() {
+  	this.navCtrl.push('ReservarPage');
+  }
+
+  openConsultar() {
+  	this.navCtrl.push('ConsultarPage');
+  }
+
+  openMinhasReservas() {
+  	this.navCtrl.push('MinhasReservasPage');
+  }
+
+  openAddRecurso() {
+  	this.navCtrl.push('AddRecursoPage');
+  }
+
+  openSuporte() {
+  	this.navCtrl.push('SuportePage');
+  }
+
+  openAjuda() {
+  	this.navCtrl.push('AjudaPage');
+  }
+
+
+
 
 }

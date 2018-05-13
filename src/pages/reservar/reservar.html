@@ -1,0 +1,68 @@
+<!--
+  Generated template for the ReservarPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Reservar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+	<ion-item>
+	  <ion-label>Local</ion-label>
+	  <ion-select [(ngModel)]="Local">
+	    <ion-option value="a">"Guilhermão"</ion-option>
+	    <ion-option value="b">Central de Salas</ion-option>
+	    <ion-option value="c">LEPEC</ion-option>
+	  </ion-select>
+	</ion-item>
+
+
+	<ion-item>
+	    <ion-label color="primary" floating>Nome</ion-label>
+	    <ion-input></ion-input>
+  	</ion-item>
+
+
+  	<ion-item>
+	    <ion-label color="primary" floating>RA</ion-label>
+	    <ion-input></ion-input>
+  	</ion-item>
+
+  	<br>
+
+  	<ion-item>
+  		<ion-label>Data</ion-label>
+  		<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Data"></ion-datetime>
+	</ion-item>
+
+	<br>
+
+	<ion-item>
+	  <ion-label>Horário de Início</ion-label>
+	  <ion-datetime displayFormat="HH:mm" [(ngModel)]="inicio"></ion-datetime>
+	</ion-item>
+
+	<br>
+
+	<ion-item>
+	  <ion-label>Horário de Término</ion-label>
+	  <ion-datetime displayFormat="HH:mm" [(ngModel)]="termino"></ion-datetime>
+	</ion-item>
+
+
+	<button ion-button icon-end>
+  		Reservar
+  		<ion-icon name="calendar"></ion-icon>
+	</button>
+
+
+
+</ion-content>
