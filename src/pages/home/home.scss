@@ -25,5 +25,14 @@ $grid-breakpoints: (
  }
 
  .btn {
-    border-radius: 50%;
+    border-radius: 60%;
+  }
+
+  ion-row {
+    text-align: center;
+    }
+
+  ion-label{
+    font-size: 85%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
