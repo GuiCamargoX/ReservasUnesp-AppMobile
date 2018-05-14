@@ -17,7 +17,7 @@ import { User } from '../../Models/user';
 })
 export class HomePage {
 
-  public infoUser : User;
+  private infoUser : User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.infoUser = this.navParams.get('infoUser');

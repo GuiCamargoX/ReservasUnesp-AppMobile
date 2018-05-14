@@ -54,11 +54,13 @@ export class MyApp {
   }
 
   setRootPage(page) {
-
+    
     if (this.firstRun) {
 
       // if its the first run we also have to hide the splash screen
-      this.nav.setRoot(page)
+      this.nav.setRoot(page, {
+        infoUser : this.userLogged
+      })
       .then(() => this.platform.ready())
       .then(() => {
 
