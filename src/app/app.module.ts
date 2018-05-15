@@ -4,9 +4,14 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
+
 import { FirebaseuiProvider } from '../providers/firebaseui/firebaseui';
+import { ScheduleProvider } from '../providers/schedule/schedule';
 
 @NgModule({
   declarations: [
@@ -15,7 +20,16 @@ import { FirebaseuiProvider } from '../providers/firebaseui/firebaseui';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyDthzEdtrH3D2WMwybQFi4EUKxKuoIvhBg",
+      authDomain: "reservasunesp.firebaseapp.com",
+      databaseURL: "https://reservasunesp.firebaseio.com",
+      projectId: "reservasunesp",
+      storageBucket: "reservasunesp.appspot.com",
+      messagingSenderId: "650512229396"
+    }),
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -26,7 +40,8 @@ import { FirebaseuiProvider } from '../providers/firebaseui/firebaseui';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    FirebaseuiProvider
+    FirebaseuiProvider,
+    ScheduleProvider
   ]
 })
 export class AppModule {}
