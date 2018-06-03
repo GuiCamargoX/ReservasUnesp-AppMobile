@@ -17,10 +17,10 @@
 
 	<ion-item>
 	  <ion-label>Local</ion-label>
-	  <ion-select [(ngModel)]="Local">
-	    <ion-option value="a">"Guilhermão"</ion-option>
-	    <ion-option value="b">Central de Salas</ion-option>
-	    <ion-option value="c">LEPEC</ion-option>
+	  <ion-select [(ngModel)]="form.place">
+	    <ion-option value="Guilhermão">"Guilhermão"</ion-option>
+	    <ion-option value="Central de Salas">Central de Salas</ion-option>
+	    <ion-option value="LEPEC">LEPEC</ion-option>
 	  </ion-select>
 	</ion-item>
 
@@ -33,32 +33,32 @@
 
   	<ion-item>
 	    <ion-label color="primary" floating>RA</ion-label>
-	    <ion-input></ion-input>
+	    <ion-input [(ngModel)]="form.ra" ></ion-input>
   	</ion-item>
 
   	<br>
 
   	<ion-item>
   		<ion-label>Data</ion-label>
-  		<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="Data"></ion-datetime>
+  		<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="form.date"></ion-datetime>
 	</ion-item>
 
 	<br>
 
 	<ion-item>
 	  <ion-label>Horário de Início</ion-label>
-	  <ion-datetime displayFormat="HH:mm" [(ngModel)]="inicio"></ion-datetime>
+	  <ion-datetime displayFormat="HH:mm" [(ngModel)]="form.inicio"></ion-datetime>
 	</ion-item>
 
 	<br>
 
 	<ion-item>
 	  <ion-label>Horário de Término</ion-label>
-	  <ion-datetime displayFormat="HH:mm" [(ngModel)]="termino"></ion-datetime>
+	  <ion-datetime displayFormat="HH:mm" [(ngModel)]="form.termino"></ion-datetime>
 	</ion-item>
 
 
-	<button ion-button icon-end>
+	<button ion-button icon-end (click)="salvaReserva()">
   		Reservar
   		<ion-icon name="calendar"></ion-icon>
 	</button>

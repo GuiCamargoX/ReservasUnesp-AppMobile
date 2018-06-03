@@ -32,7 +32,7 @@ export class HomePage {
   }
 
   openReservar() {
-  	this.navCtrl.push('ReservarPage');
+  	this.navCtrl.push('ReservarPage',{ info : this.infoUser } );
   }
 
   openConsultar() {

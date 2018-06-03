@@ -14,56 +14,56 @@ import { AngularFireDatabase } from 'angularfire2/database';
 export class ScheduleProvider {
   private UserPath = 'Users/';
   private DatePath = 'Date/';
-  private Resource = 'Res/';
+  //private Resource = 'Res/';
 
   constructor(private db: AngularFireDatabase) {
   }
-  
-  // Tests to see if /users/<userId> has any data. 
-  private checkIfUserExists(userId) {
-      let exists;
 
-      this.db.database.ref(this.UserPath + userId).once('value', (snapshot) => {
-      exists = (snapshot.val() !== null) });
-        
-      if (exists)
-          return true;
-        else 
-          return false;
-  }
 
 
   save(user: User, res: Book){
     return new Promise((resolve, reject) => {
       
-      if ( this.checkIfUserExists( user.uid ) ) {
-        
-        this.db.object(this.UserPath + user.uid + '/' + res.date)//get
-          .update({ reserve : res} )
-          .then(() => resolve())
-          .catch((e) => reject(e));
-
-      } else {
-        
-        this.db.object(this.UserPath + user.uid).set({
+    
+        this.db.object(this.UserPath + user.uid).update({
           username: user.displayName,
           email: user.email,
           profile_picture : user.photoURL,
         })
-        
-        this.db.object(this.UserPath + user.uid + '/' + res.date).set({
-          reserve : [res] 
-        })
+
+
+        this.db.database.ref(this.UserPath + user.uid + '/reservas/' + res.date).set({
+          info : res
+        });
+
+        this.saveDatePath(user, res);
+
         resolve();
       
-      }
-
-      this.db.object(this.DatePath + res.date).set({//arrumar
-        userId : user.uid //lista
-      })
-
     })
 
   }
+
+
+ private saveDatePath(user: User, res: Book) { 
+  
+  this.db.database.ref(this.DatePath + res.date + '/userId').once('value').then(function(snapshot) {
+    var file = snapshot.val();
+    let dias = new Set();
+      
+    if( file )
+      dias.add(file);
+
+    dias.add(user.uid);
+
+    console.log(dias);
+  });
+  
+  this.db.object(this.DatePath + res.date ).set({//arrumar
+      userId : dias
+  })
+    
+}
+
 
 }
