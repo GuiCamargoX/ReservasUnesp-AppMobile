@@ -19,6 +19,26 @@ export class ScheduleProvider {
   constructor(private db: AngularFireDatabase) {
   }
 
+  public getMinhasReservas( uid: string ){
+    var request = new Array();
+
+    this.db.database.ref(this.UserPath + uid +'/reservas').once('value').then(function(snapshot) {
+      var file = snapshot.val();
+      
+      if(file){
+        for (var key in file) {
+          if (file.hasOwnProperty(key)) {
+              request.push(file[key]);
+          }
+        }
+      }else
+        request = null;
+
+      });
+       console.log(request);
+
+    return request;
+  }
 
 
   save(user: User, res: Book){
@@ -38,6 +58,8 @@ export class ScheduleProvider {
 
         this.saveDatePath(user, res);
 
+        //this.getMinhasReservas(user.uid);
+
         resolve();
       
     })
@@ -45,25 +67,26 @@ export class ScheduleProvider {
   }
 
 
- private saveDatePath(user: User, res: Book) { 
-  
+ private saveDatePath(user: User, res: Book) {
+  var pathSchedDate = this.db.database.ref(this.DatePath + res.date );
+    
   this.db.database.ref(this.DatePath + res.date + '/userId').once('value').then(function(snapshot) {
     var file = snapshot.val();
-    let dias = new Set();
+    var dias:Set<any> = new Set();
       
-    if( file )
-      dias.add(file);
+    if( file ){
+      dias = new Set(file);
+    }
 
     dias.add(user.uid);
 
-    console.log(dias);
-  });
-  
-  this.db.object(this.DatePath + res.date ).set({//arrumar
-      userId : dias
-  })
+    pathSchedDate.update({
+      userId : Array.from(dias)
+    })
     
-}
-
+    //console.log(dias);
+    });
+    
+  }
 
 }

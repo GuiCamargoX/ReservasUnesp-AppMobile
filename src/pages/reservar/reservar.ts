@@ -21,7 +21,7 @@ export class ReservarPage {
   private form : Book = {
     date : '',
     ra : '',
-    check : null,
+    state : "pendente",
     place : null,
     inicio : null,
     termino : null,
