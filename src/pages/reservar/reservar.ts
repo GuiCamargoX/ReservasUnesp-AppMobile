@@ -26,6 +26,7 @@ export class ReservarPage {
     inicio : null,
     termino : null,
   };
+  private current_day = new Date();
 
   constructor(private sch:ScheduleProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.infoUser = this.navParams.get('info');

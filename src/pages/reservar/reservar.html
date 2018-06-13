@@ -25,44 +25,36 @@
 	</ion-item>
 
 
-	<ion-item>
-	    <ion-label color="primary" floating>Nome</ion-label>
-	    <ion-input></ion-input>
+		<ion-item>
+	    <ion-label color="primary" fixed>Nome</ion-label>
+	    <ion-input placeholder={{infoUser.displayName}} readonly=true></ion-input>
   	</ion-item>
 
 
   	<ion-item>
-	    <ion-label color="primary" floating>RA</ion-label>
+	    <ion-label color="primary" fixed>RA</ion-label>
 	    <ion-input [(ngModel)]="form.ra" ></ion-input>
   	</ion-item>
 
-  	<br>
-
   	<ion-item>
-  		<ion-label>Data</ion-label>
-  		<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="form.date"></ion-datetime>
-	</ion-item>
-
-	<br>
+  		<ion-label color="primary" fixed>Data</ion-label>
+  		<ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="form.date" [min]=current_day.getFullYear() max="2020-10-31"></ion-datetime>
+	 </ion-item>
 
 	<ion-item>
 	  <ion-label>Horário de Início</ion-label>
 	  <ion-datetime displayFormat="HH:mm" [(ngModel)]="form.inicio"></ion-datetime>
 	</ion-item>
 
-	<br>
-
 	<ion-item>
 	  <ion-label>Horário de Término</ion-label>
 	  <ion-datetime displayFormat="HH:mm" [(ngModel)]="form.termino"></ion-datetime>
 	</ion-item>
 
-
-	<button ion-button icon-end (click)="salvaReserva()">
-  		Reservar
-  		<ion-icon name="calendar"></ion-icon>
+	<br><br><br>
+	<button ion-button full icon-end (click)="salvaReserva()">
+		Reservar
+		<ion-icon name="calendar"></ion-icon>
 	</button>
-
-
 
 </ion-content>

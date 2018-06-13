@@ -15,6 +15,12 @@
 
 <ion-content padding>
 
+	  <ion-slides pager="true">
+				<ion-slide>
+						<img src="https://www2.unesp.br/images/unesp.svg" alt="cars"/>
+				</ion-slide>
+		</ion-slides>
+
 	<ion-item>
 	    <ion-label color="primary" floating>Nome</ion-label>
 	    <ion-input></ion-input>
@@ -35,14 +41,19 @@
   	</ion-item>
 
   	<br>
+		<br>
 
-  	<button ion-button icon-end>
+  	<button ion-button full icon-end>
   		Adicionar
   		<ion-icon name="add"></ion-icon>
 	</button>
 
 
-
+  <ion-fab top right edge>
+    <button ion-fab >
+        <ion-icon name="camera"></ion-icon>
+    </button>
+  </ion-fab>
 
 
 

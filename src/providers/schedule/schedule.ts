@@ -19,6 +19,66 @@ export class ScheduleProvider {
   constructor(private db: AngularFireDatabase) {
   }
 
+  public remove( uid:string, date:string ){
+    var path = this.db.database;
+
+    this.db.database.ref(this.UserPath + uid +'/reservas/' + date).remove();
+    
+    this.db.database.ref(this.DatePath + date + '/userId').once('value').then(function(snapshot) {
+      var file = snapshot.val();
+      var ids:Set<any> = new Set();
+        
+      if( file ){
+        ids = new Set(file);
+      }
+  
+      ids.delete(uid);
+  
+      path.ref('Date/' + date ).update({
+        userId : Array.from(ids)
+      })
+      
+      });
+
+  }
+
+  public consultar( date:string ){
+    var request = new Array();
+    var path = this.db.database;
+
+    this.db.database.ref( this.DatePath + date + '/userId' ).once('value').then(function(snapshot) {
+      var file = snapshot.val();
+
+      if(file){
+        for(let item of file){
+          let inf = {
+            email : '',
+            profile_picture : '',
+            name :'',
+            reserv : null
+          };
+          path.ref('Users/' + item).once('value').then(function(snapshot){
+            let req = snapshot.val();
+
+            inf.email = req.email;
+            inf.profile_picture = req.profile_picture;
+            inf.name = req.username;
+            inf.reserv = req.reservas[date].info;
+
+            request.push(inf);
+          });
+        }
+
+      }else
+        request = null;
+
+      });
+
+    console.log(request);
+    return request;
+
+  }
+
   public getMinhasReservas( uid: string ){
     var request = new Array();
 
@@ -57,8 +117,6 @@ export class ScheduleProvider {
         });
 
         this.saveDatePath(user, res);
-
-        //this.getMinhasReservas(user.uid);
 
         resolve();
       
