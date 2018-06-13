@@ -13,6 +13,10 @@ import { LoginPage } from '../pages/login/login';
 import { FirebaseuiProvider } from '../providers/firebaseui/firebaseui';
 import { ScheduleProvider } from '../providers/schedule/schedule';
 
+import { EmailComposer } from '@ionic-native/email-composer';
+
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -39,6 +43,7 @@ import { ScheduleProvider } from '../providers/schedule/schedule';
   providers: [
     StatusBar,
     SplashScreen,
+    EmailComposer,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseuiProvider,
     ScheduleProvider
