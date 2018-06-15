@@ -40,7 +40,7 @@ export class HomePage {
   }
 
   openMinhasReservas() {
-  	this.navCtrl.push('MinhasReservasPage');
+  	this.navCtrl.push('MinhasReservasPage',{ info : this.infoUser });
   }
 
   openAddRecurso() {

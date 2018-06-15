@@ -95,7 +95,7 @@ export class ScheduleProvider {
         request = null;
 
       });
-       console.log(request);
+       //console.log(request);
 
     return request;
   }
@@ -111,9 +111,16 @@ export class ScheduleProvider {
           profile_picture : user.photoURL,
         })
 
-
+        let d = res.date.split('-');
         this.db.database.ref(this.UserPath + user.uid + '/reservas/' + res.date).set({
-          info : res
+          info : {
+            date : d[2] + '/' + d[1] + '/' + d[0],
+            ra : res.ra,
+            state : res.state,
+            place : res.place,
+            inicio : res.inicio,
+            termino : res.termino
+          }
         });
 
         this.saveDatePath(user, res);

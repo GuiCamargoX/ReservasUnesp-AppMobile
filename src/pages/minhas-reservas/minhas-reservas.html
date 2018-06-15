@@ -13,15 +13,25 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-card>
-  <ion-card-header>
-    LEPEC
-  </ion-card-header>
-  <ion-card-content>
-    Data: 19/06/2018
-    <br>
-    Horário: 18:00 - 20:00
-  </ion-card-content>
-</ion-card>
+<ion-content class="card-background-page">
+  
+  <ion-card *ngFor="let item of myreserv">
+    
+    <img width="330" height="180" [src]=chosePhoto(item) >
+    
+    <div class="card-title">
+       * {{item.info.place}}
+    </div>
+
+    <div class="card-subtitle">
+      Data: {{item.info.date}}
+      <br>
+      Horário: {{item.info.inicio}} - {{item.info.termino}}
+      <br>
+      Situação: {{item.info.state}}
+      <br>
+      RA(solicitado): {{item.info.ra}}
+    </div>
+
+  </ion-card>
 </ion-content>

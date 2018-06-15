@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ScheduleProvider } from './../../providers/schedule/schedule';
+import { User } from '../../Models/user';
 
 /**
  * Generated class for the MinhasReservasPage page.
@@ -14,11 +16,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MinhasReservasPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private infoUser : User;
+  private myreserv;
+
+  constructor(private sch:ScheduleProvider, public navCtrl: NavController, public navParams: NavParams) {
+    this.infoUser = this.navParams.get('info');
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MinhasReservasPage');
+    this.myreserv = this.sch.getMinhasReservas( this.infoUser.uid );
+  }
+
+  public chosePhoto(item){
+    let photoPlace:String = null;
+
+    if(item.info.place === 'LEPEC')
+      photoPlace= 'assets/img/lepec.jpg';
+
+    if(item.info.place === "Guilhermão")
+      photoPlace= 'assets/img/gg.jpeg';
+  
+    return photoPlace;
   }
 
 }
