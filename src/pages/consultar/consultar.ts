@@ -36,13 +36,5 @@ export class ConsultarPage {
     
   }
 
-  presentAlert(date) {
-    let alert = this.alertCtrl.create({
-      title: date,
-      subTitle: 'A solicitação foi enviada para aprovação, vá em "Minhas Reservas" para verificar sua situação.',
-      buttons: ['Ok']
-    });
-    alert.present();
-  }
-
+  
 }
