@@ -33,5 +33,11 @@
       RA(solicitado): {{item.info.ra}}
     </div>
 
+    <ion-fab top right>
+      <button ion-fab mini (click)="remove(item)">
+        <ion-icon name="remove"></ion-icon>
+      </button>
+    </ion-fab>
+
   </ion-card>
 </ion-content>

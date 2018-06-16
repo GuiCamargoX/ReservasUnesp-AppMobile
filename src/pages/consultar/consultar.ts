@@ -1,5 +1,7 @@
+import { ScheduleProvider } from './../../providers/schedule/schedule';
+import { DatePicker } from '@ionic-native/date-picker';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the ConsultarPage page.
@@ -13,67 +15,34 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'consultar.html',
 })
 export class ConsultarPage {
-  date: any;
-  daysInThisMonth: any;
-  daysInLastMonth: any;
-  daysInNextMonth: any;
-  monthNames: string[];
-  currentMonth: any;
-  currentYear: any;
-  currentDate: any;
+  private date: any;
+  private inf:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private alertCtrl: AlertController, private sch:ScheduleProvider, public navCtrl: NavController, public navParams: NavParams, private datePicker: DatePicker) {
     
   }
 
   ionViewDidLoad() {
+
     console.log('ionViewDidLoad ConsultarPage');
+    this.datePicker.show({
+      date: new Date(),
+      mode: 'date',
+      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+    }).then(
+      date => {this.inf = this.sch.consultar( date.toJSON().substring(0,10) ) },
+      err => console.log('Error occurred while getting date: ', err)
+    );
+    
   }
 
-  getDaysOfMonth() {
-    this.daysInThisMonth = new Array();
-    this.daysInLastMonth = new Array();
-    this.daysInNextMonth = new Array();
-    this.currentMonth = this.monthNames[this.date.getMonth()];
-    this.currentYear = this.date.getFullYear();
-    if(this.date.getMonth() === new Date().getMonth()) {
-      this.currentDate = new Date().getDate();
-    } else {
-      this.currentDate = 999;
-    }
-  
-    var firstDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth(), 1).getDay();
-    var prevNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth(), 0).getDate();
-    for(var i = prevNumOfDays-(firstDayThisMonth-1); i <= prevNumOfDays; i++) {
-      this.daysInLastMonth.push(i);
-    }
-  
-    var thisNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0).getDate();
-    for (var i = 0; i < thisNumOfDays; i++) {
-      this.daysInThisMonth.push(i+1);
-    }
-  
-    var lastDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0).getDay();
-    var nextNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth()+2, 0).getDate();
-    for (var i = 0; i < (6-lastDayThisMonth); i++) {
-      this.daysInNextMonth.push(i+1);
-    }
-    var totalDays = this.daysInLastMonth.length+this.daysInThisMonth.length+this.daysInNextMonth.length;
-    if(totalDays<36) {
-      for(var i = (7-lastDayThisMonth); i < ((7-lastDayThisMonth)+7); i++) {
-        this.daysInNextMonth.push(i);
-      }
-    }
-  }
-
-  goToLastMonth() {
-    this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
-    this.getDaysOfMonth();
-  }
-
-  goToNextMonth() {
-    this.date = new Date(this.date.getFullYear(), this.date.getMonth()+2, 0);
-    this.getDaysOfMonth();
+  presentAlert(date) {
+    let alert = this.alertCtrl.create({
+      title: date,
+      subTitle: 'A solicitação foi enviada para aprovação, vá em "Minhas Reservas" para verificar sua situação.',
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
 }

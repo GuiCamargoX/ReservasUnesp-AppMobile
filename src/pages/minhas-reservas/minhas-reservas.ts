@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ScheduleProvider } from './../../providers/schedule/schedule';
 import { User } from '../../Models/user';
 
@@ -19,7 +19,7 @@ export class MinhasReservasPage {
   private infoUser : User;
   private myreserv;
 
-  constructor(private sch:ScheduleProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private alertCtrl: AlertController, private sch:ScheduleProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.infoUser = this.navParams.get('info');
   }
 
@@ -37,6 +37,37 @@ export class MinhasReservasPage {
       photoPlace= 'assets/img/gg.jpeg';
   
     return photoPlace;
+  }
+
+  public remove(item){
+    
+    let alert = this.alertCtrl.create({
+      title: 'Excluir Solicitação Pendente',
+      message: 'Deseja remover sua solicitação?'+
+      ' dia: ' + item.info.date +
+      ' local: '+ item.info.place +
+      ' horário: '+ item.info.inicio + '-' + item.info.termino +
+      ' do RA: ' + item.info.ra,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancelar',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            let d = item.info.date.split('/');
+            this.sch.remove(this.infoUser.uid, d[2] +'-'+ d[1]+'-'+d[0]);
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    alert.present();
+
   }
 
 }

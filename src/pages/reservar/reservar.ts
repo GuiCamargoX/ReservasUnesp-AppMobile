@@ -46,7 +46,7 @@ export class ReservarPage {
   presentAlert() {
     let alert = this.alertCtrl.create({
       title: 'Solicitação enviada com sucesso!',
-      subTitle: 'A solicitação foi enviada para aprovação, vá em "Minhas Reservas" para verificar sua situação.',
+      subTitle: 'A solicitação foi enviada para aprovação, porfavor compareça a seção Tecnica para confirmar sua solicitação e aceitar os termos',
       buttons: ['Ok']
     });
     alert.present();

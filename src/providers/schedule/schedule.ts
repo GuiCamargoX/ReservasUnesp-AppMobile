@@ -74,7 +74,7 @@ export class ScheduleProvider {
 
       });
 
-    console.log(request);
+    //console.log(request);
     return request;
 
   }
