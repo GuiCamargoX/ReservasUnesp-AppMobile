@@ -1,7 +1,7 @@
 import { Book } from './../../Models/book';
 import { ScheduleProvider } from './../../providers/schedule/schedule';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { User } from '../../Models/user';
 
 /**
@@ -28,7 +28,7 @@ export class ReservarPage {
   };
   private current_day = new Date();
 
-  constructor(private sch:ScheduleProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private sch:ScheduleProvider, public navCtrl: NavController, public navParams: NavParams , private alertCtrl: AlertController) {
     this.infoUser = this.navParams.get('info');
     console.log(this.infoUser.displayName);
   }
@@ -38,7 +38,18 @@ export class ReservarPage {
   }
 
   salvaReserva(){
-    this.sch.save(this.infoUser, this.form );
+    this.sch.save(this.infoUser, this.form ).then(
+      () => this.presentAlert()
+    );
+  }
+
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Solicitação enviada com sucesso!',
+      subTitle: 'A solicitação foi enviada para aprovação, vá em "Minhas Reservas" para verificar sua situação.',
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
 }
