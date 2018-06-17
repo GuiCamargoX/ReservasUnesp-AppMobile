@@ -102,8 +102,10 @@ export class ScheduleProvider {
 
 
   save(user: User, res: Book){
+    var ph = this.db.database;
+    var savepath = this.saveDatePath;
+
     return new Promise((resolve, reject) => {
-      
     
         this.db.object(this.UserPath + user.uid).update({
           username: user.displayName,
@@ -111,31 +113,42 @@ export class ScheduleProvider {
           profile_picture : user.photoURL,
         })
 
-        let d = res.date.split('-');
-        this.db.database.ref(this.UserPath + user.uid + '/reservas/' + res.date).set({
-          info : {
-            date : d[2] + '/' + d[1] + '/' + d[0],
-            ra : res.ra,
-            state : res.state,
-            place : res.place,
-            inicio : res.inicio,
-            termino : res.termino
+        this.db.database.ref( this.DatePath + res.date + '/userId' ).once('value').then(function(snapshot) {
+          var file = snapshot.val();
+          var id = new Set(file);
+          
+          if( id.has(user.uid) ){
+            reject('Proibido ter mais do que duas reservas para o mesmo dia, independente do espaço ou horário solicitado');
+          }else{
+ 
+           let d = res.date.split('-');
+           ph.ref('Users/' + user.uid + '/reservas/' + res.date).set({
+             info : {
+               date : d[2] + '/' + d[1] + '/' + d[0],
+               ra : res.ra,
+               state : res.state,
+               place : res.place,
+               inicio : res.inicio,
+               termino : res.termino
+             }
+           });
+   
+           savepath(user, res, ph);
+   
+           resolve(); 
           }
-        });
 
-        this.saveDatePath(user, res);
+        });    
 
-        resolve();
-      
     })
 
   }
 
 
- private saveDatePath(user: User, res: Book) {
-  var pathSchedDate = this.db.database.ref(this.DatePath + res.date );
+ private saveDatePath(user: User, res: Book , datb) {
+  var pathSchedDate = datb.ref('Date/' + res.date );
     
-  this.db.database.ref(this.DatePath + res.date + '/userId').once('value').then(function(snapshot) {
+  datb.ref('Date/' + res.date + '/userId').once('value').then(function(snapshot) {
     var file = snapshot.val();
     var dias:Set<any> = new Set();
       

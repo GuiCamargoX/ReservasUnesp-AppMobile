@@ -39,7 +39,8 @@ export class ReservarPage {
 
   salvaReserva(){
     this.sch.save(this.infoUser, this.form ).then(
-      () => this.presentAlert()
+      () => this.presentAlert(),
+      (error) => this.erroAlert(error)
     );
   }
 
@@ -47,6 +48,15 @@ export class ReservarPage {
     let alert = this.alertCtrl.create({
       title: 'Solicitação enviada com sucesso!',
       subTitle: 'A solicitação foi enviada para aprovação, porfavor compareça a seção Tecnica para confirmar sua solicitação e aceitar os termos',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
+
+  erroAlert(error:string) {
+    let alert = this.alertCtrl.create({
+      title: 'Erro!',
+      subTitle: error,
       buttons: ['Ok']
     });
     alert.present();
