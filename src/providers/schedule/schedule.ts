@@ -42,12 +42,12 @@ export class ScheduleProvider {
 
   }
 
-  public consultar( date:string ){
+  public async consultar( date:string ){
     var request = new Array();
-    var path = this.db.database;
 
-    this.db.database.ref( this.DatePath + date + '/userId' ).once('value').then(function(snapshot) {
-      var file = snapshot.val();
+    const wordsSnapshot = await this.db.database.ref( this.DatePath + date + '/userId' ).once('value');
+    
+    var file = wordsSnapshot.val();
 
       if(file){
         for(let item of file){
@@ -57,22 +57,20 @@ export class ScheduleProvider {
             name :'',
             reserv : null
           };
-          path.ref('Users/' + item).once('value').then(function(snapshot){
-            let req = snapshot.val();
+        let snap= await this.db.database.ref('Users/' + item).once('value');
+        let req = snap.val();
 
-            inf.email = req.email;
-            inf.profile_picture = req.profile_picture;
-            inf.name = req.username;
-            inf.reserv = req.reservas[date].info;
+        inf.email = req.email;
+        inf.profile_picture = req.profile_picture;
+        inf.name = req.username;
+        inf.reserv = req.reservas[date].info;
 
-            request.push(inf);
-          });
+        request.push(inf);
+        
         }
 
       }else
         request = null;
-
-      });
 
     //console.log(request);
     return request;
@@ -105,7 +103,7 @@ export class ScheduleProvider {
     var ph = this.db.database;
     var savepath = this.saveDatePath;
 
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
     
         this.db.object(this.UserPath + user.uid).update({
           username: user.displayName,
@@ -113,12 +111,26 @@ export class ScheduleProvider {
           profile_picture : user.photoURL,
         })
 
+        var test = await this.consultar(res.date);
+        let error:boolean = false;
+        for(let dados of test){
+          if(dados.reserv.place === res.place){
+            if( (Date.parse('01/01/2011 '+res.inicio) >= Date.parse('01/01/2011 '+ dados.reserv.inicio)) &&  (Date.parse('01/01/2011 '+dados.reserv.termino) >=Date.parse('01/01/2011 '+res.termino)) ){
+              reject("Conflito! Já existe uma reserva solicitada para este local no determinado horario.")
+              error=true;
+            }
+
+          }
+          
+        }
+        
+    if( !error ){
         this.db.database.ref( this.DatePath + res.date + '/userId' ).once('value').then(function(snapshot) {
           var file = snapshot.val();
           var id = new Set(file);
           
           if( id.has(user.uid) ){
-            reject('Proibido ter mais do que duas reservas para o mesmo dia, independente do espaço ou horário solicitado');
+            reject('Proibido ter mais do que duas reservas para o mesmo dia, independente do espaço ou horário solicitado.');
           }else{
  
            let d = res.date.split('-');
@@ -138,7 +150,8 @@ export class ScheduleProvider {
            resolve(); 
           }
 
-        });    
+        });   
+      } 
 
     })
 
