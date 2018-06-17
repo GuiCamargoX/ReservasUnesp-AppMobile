@@ -74,7 +74,7 @@ export class ScheduleProvider {
 
       });
 
-    console.log(request);
+    //console.log(request);
     return request;
 
   }
@@ -150,6 +150,8 @@ export class ScheduleProvider {
 
         var test = await this.consultar(res.date);
         let error:boolean = false;
+
+        if(test !=null)
         for(let dados of test){
           if(dados.reserv.place === res.place){
             if( (Date.parse('01/01/2011 '+res.inicio) >= Date.parse('01/01/2011 '+ dados.reserv.inicio)) &&  (Date.parse('01/01/2011 '+dados.reserv.termino) >=Date.parse('01/01/2011 '+res.termino)) ){
