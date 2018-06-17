@@ -42,6 +42,43 @@ export class ScheduleProvider {
 
   }
 
+  public consultarDat( date:string ){
+    var request = new Array();
+    var path = this.db.database;
+
+    this.db.database.ref( this.DatePath + date + '/userId' ).once('value').then(function(snapshot) {
+      var file = snapshot.val();
+
+      if(file){
+        for(let item of file){
+          let inf = {
+            email : '',
+            profile_picture : '',
+            name :'',
+            reserv : null
+          };
+          path.ref('Users/' + item).once('value').then(function(snapshot){
+            let req = snapshot.val();
+
+            inf.email = req.email;
+            inf.profile_picture = req.profile_picture;
+            inf.name = req.username;
+            inf.reserv = req.reservas[date].info;
+
+            request.push(inf);
+          });
+        }
+
+      }else
+        request = null;
+
+      });
+
+    console.log(request);
+    return request;
+
+  }
+
   public async consultar( date:string ){
     var request = new Array();
 

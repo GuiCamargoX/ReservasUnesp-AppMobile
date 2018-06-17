@@ -25,12 +25,14 @@ export class ConsultarPage {
   ionViewDidLoad() {
 
     console.log('ionViewDidLoad ConsultarPage');
+    //this.inf = this.sch.consultarDat('2018-01-01');
+    
     this.datePicker.show({
       date: new Date(),
       mode: 'date',
       androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
     }).then(
-      date => {this.inf = this.sch.consultar( date.toJSON().substring(0,10) ) },
+      date => {this.inf = this.sch.consultarDat( date.toJSON().substring(0,10) ) },
       err => console.log('Error occurred while getting date: ', err)
     );
     
